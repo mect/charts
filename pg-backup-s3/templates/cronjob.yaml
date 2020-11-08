@@ -1,0 +1,61 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "pg-backup-s3.fullname" . }}-backup
+  labels:
+    {{- include "pg-backup-s3.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: {{ .Chart.Name }}
+              securityContext:
+                {{- toYaml .Values.securityContext | nindent 16 }}
+              image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}
+              args:
+                - backup
+                {{- if .Values.config.s3Endpoint }}
+                - --s3-endpoint={{ .Values.config.s3Endpoint }}
+                {{- end }}
+                - --s3-bucket={{ required "Value config.s3Bucket not set" .Values.config.s3Bucket  }}
+                - --s3-region={{ required "Value config.s3Region not set" .Values.config.s3Region  }}
+                - --name-prefix={{ required "Value config.namePrefix not set" .Values.config.namePrefix }}
+                - --postgres-host={{ required "Value config.postgresql.host not set" .Values.config.postgresql.host  }}
+                - --postgres-database={{ required "Value config.postgresql.database not set" .Values.config.postgresql.database  }}
+              env:
+                - name: PGBACKUPS3_POSTGRES_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ required "Value config.postgresql.usernameSecretName not set" .Values.config.postgresql.usernameSecretName  }}
+                      key: {{ required "Value config.postgresql.usernameSecretKey not set" .Values.config.postgresql.usernameSecretKey  }}
+                - name: PGBACKUPS3_POSTGRES_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ required "Value config.postgresql.passwordSecretName not set" .Values.config.postgresql.passwordSecretName   }}
+                      key: {{ required "Value config.postgresql.passwordSecretKey not set" .Values.config.postgresql.passwordSecretKey   }}
+                - name: PGBACKUPS3_ENCRYPTION_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ required "Value config.encryptionKeySecretName not set" .Values.config.encryptionKeySecretName   }}
+                      key: {{ required "Value config.encryptionKeySecretKey not set" .Values.config.encryptionKeySecretKey   }}
+                - name: PGBACKUPS3_S3_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ required "Value config.s3AccessKeySecretName not set" .Values.config.s3AccessKeySecretName   }}
+                      key: {{ required "Value config.s3AccessKeySecretKey not set" .Values.config.s3AccessKeySecretKey   }}
+                - name: PGBACKUPS3_S3_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ required "Value config.s3AccessSecretSecretName not set" .Values.config.s3AccessSecretSecretName   }}
+                      key: {{ required "Value config.s3AccessSecretSecretKey not set" .Values.config.s3AccessSecretSecretKey   }}
+                {{- if .Values.config.errorWebhook }}
+                - name: ERROR_WEBHOOK
+                  value: {{ .Values.config.errorWebhook | quote }}
+                {{- end }}
