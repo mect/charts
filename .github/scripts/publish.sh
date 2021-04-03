@@ -8,7 +8,7 @@ REPO_NAME="${REPO_NAME:-mect}"
 REPO_URL="${REPO_URL:-https://charts.mect.io/}"
 TARGET_BRANCH="${TARGET_BRANCH:-gh-pages}"
 GH_REF="${GH_REF:-github.com/mect/charts.git}"
-GH_REMOTE_URL="https://$GITHUB_TOKEN@$GH_REF"
+GH_REMOTE_URL="https://github:$GITHUB_TOKEN@$GH_REF"
 
 log_error() {
     printf '\e[31mERROR: %s\n\e[39m' "$1" >&2
