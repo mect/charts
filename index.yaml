@@ -3,7 +3,17 @@ entries:
   discord-invite-page:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-04-03T15:51:21.470292484Z"
+    created: "2021-04-03T17:04:21.029560844Z"
+    description: A Helm chart for Kubernetes
+    digest: c252e5f7880fd763172a38157d5f60015aa91ce06514b05f598281b7f5eb3ab8
+    name: discord-invite-page
+    type: application
+    urls:
+    - https://charts.mect.io/discord-invite-page-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-04-03T17:04:21.029037134Z"
     description: A Helm chart for Kubernetes
     digest: 32cc401d6e5c51ced99054843e8f4a003365a5593bcdeacda4a4a8b8f3c08128
     name: discord-invite-page
@@ -14,12 +24,12 @@ entries:
   pg-backup-s3:
   - apiVersion: v2
     appVersion: 60bb733e01b8bae1bf6a23ab061b775f4cadd8f4
-    created: "2021-04-03T15:51:21.470629419Z"
+    created: "2021-04-03T17:04:21.02988905Z"
     description: A Helm chart for pg-backup-s3
-    digest: c000db8a50cfd897c0d467646fbdcfa0bfa3eb52cd1eab875f4ebf9a99d03dec
+    digest: 8f2f09a091fc10b01b7b6b49abf26080197960a9b8bad1872fbc0cbd0e0060dd
     name: pg-backup-s3
     type: application
     urls:
     - https://charts.mect.io/pg-backup-s3-0.1.0.tgz
     version: 0.1.0
-generated: "2021-04-03T15:51:21.469624414Z"
+generated: "2021-04-03T17:04:21.028199818Z"
