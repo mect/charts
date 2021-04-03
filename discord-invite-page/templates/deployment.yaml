@@ -22,11 +22,11 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
-        {{ - if .Values.configuration.wwwConfigMap ne "" }}
+        {{- if .Values.configuration.wwwConfigMap }}
         - name: www
           configMap:
             name: {{ .Values.configuration.wwwConfigMap }}
-        {{- end -}}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -34,7 +34,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
-           {{ - if .Values.configuration.wwwConfigMap ne "" }}
+           {{- if .Values.configuration.wwwConfigMap }}
             - name: www
               mountPath: /go/src/github.com/meyskens/discord-join-page/www
            {{- end }}
