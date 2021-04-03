@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "discord-invite-page.fullname" . }}
+  labels:
+    {{- include "discord-invite-page.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "discord-invite-page.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "discord-invite-page.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "discord-invite-page.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        {{ - if .Values.configuration.wwwConfigMap ne "" }}
+        - name: www
+          configMap:
+            name: {{ .Values.configuration.wwwConfigMap }}
+        {{- end -}}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+           {{ - if .Values.configuration.wwwConfigMap ne "" }}
+            - name: www
+              mountPath: /go/src/github.com/meyskens/discord-join-page/www
+           {{- end }}
+          env:
+            - name: DISCORDJOINPAGE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.configuration.secretName }}
+                  key: DISCORDJOINPAGE_TOKEN
+            - name: DISCORDJOINPAGE_CHANNEL_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.configuration.secretName }}
+                  key: DISCORDJOINPAGE_CHANNEL_ID
+            - name: DISCORDJOINPAGE_HCAPTCHA_SITE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.configuration.secretName }}
+                  key: DISCORDJOINPAGE_HCAPTCHA_SITE_KEY
+            - name: DISCORDJOINPAGE_HCAPTCHA_SITE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.configuration.secretName }}
+                  key: DISCORDJOINPAGE_HCAPTCHA_SITE_SECRET
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
