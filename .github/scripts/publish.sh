@@ -22,7 +22,7 @@ index_dir=$(mktemp -d)
 trap "rm -rf $packages_dir $index_dir" EXIT
 
 pushd "$packages_dir"
-git clone --branch=gh-pages --depth=1 "$GH_REMOTE_URL" .
+git clone --branch=gh-pages "$GH_REMOTE_URL" .
 git config user.email "charts@mect.io"
 git config user.name "MECT Deploy Bot"
 [ -d "$REPO_NAME" ] || mkdir "$REPO_NAME"
