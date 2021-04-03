@@ -25,11 +25,8 @@ pushd "$packages_dir"
 git clone --branch=gh-pages "$GH_REMOTE_URL" .
 git config user.email "charts@mect.io"
 git config user.name "MECT Deploy Bot"
-[ -d "$REPO_NAME" ] || mkdir "$REPO_NAME"
-pushd "$REPO_NAME"
-[ -d "index.yaml" ] || touch index.yaml
+[ -f "index.yaml" ] || touch index.yaml
 mv index.yaml "$index_dir/index.yaml"
-popd
 popd
 
 
