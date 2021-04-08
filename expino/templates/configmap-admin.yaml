@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "expino.fullname" . }}-expino
+  name: {{ include "expino.fullname" . }}-admin
   labels:
     {{- include "expino.labels" . | nindent 4 }}
     mect.io/component: expino
