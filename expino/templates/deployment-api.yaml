@@ -15,6 +15,7 @@ spec:
     metadata:
       labels:
         {{- include "expino.selectorLabels" . | nindent 8 }}
+        mect.io/component: api
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

@@ -4,6 +4,7 @@ metadata:
   name: {{ include "expino.fullname" . }}
   labels:
     {{- include "expino.labels" . | nindent 4 }}
+    mect.io/component: expino
 spec:
   replicas: {{ .Values.expino.replicaCount }}
   selector:
