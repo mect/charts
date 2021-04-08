@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "expino.fullname" . }}
+  labels:
+    {{- include "expino.labels" . | nindent 4 }}
+    mect.io/component: api
+spec:
+  replicas: {{ .Values.api.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "expino.selectorLabels" . | nindent 6 }}
+      mect.io/component: api
+  template:
+    metadata:
+      labels:
+        {{- include "expino.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "expino.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: static
+          persistentVolumeClaim:
+            claimName: {{ include "expino.fullname" . }}-api
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          imagePullPolicy: {{ .Values.api.image.pullPolicy }}
+          volumeMounts:
+            - name: static
+              mountPath: /opt/expino/expino-static
+          env:
+            - name: EXPINO_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.configuration.secretName }}
+                  key: EXPINO_JWT_SECRET
+            - name: EXPINO_POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.configuration.secretName }}
+                  key: EXPINO_POSTGRES_HOST
+            - name: EXPINO_POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.configuration.secretName }}
+                  key: EXPINO_POSTGRES_USERNAME
+            - name: EXPINO_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.configuration.secretName }}
+                  key: EXPINO_POSTGRES_PASSWORD
+            - name: EXPINO_POSTGRES_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.configuration.secretName }}
+                  key: EXPINO_POSTGRES_DATABASE
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "expino.fullname" . }}
+  labels:
+    {{- include "expino.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.expino.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "expino.selectorLabels" . | nindent 6 }}
+      mect.io/component: expino
+  template:
+    metadata:
+      labels:
+        {{- include "expino.selectorLabels" . | nindent 8 }}
+        mect.io/component: expino
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "expino.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: variables
+          configMap:
+            name: {{ include "expino.fullname" . }}-expino
+            subPath: "variables.js"
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.expino.image.repository }}:v{{ .Values.expino.image.tag }}"
+          imagePullPolicy: {{ .Values.expino.image.pullPolicy }}
+          volumeMounts:
+            - name: variables
+              mountPath: /var/www/variables.js
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

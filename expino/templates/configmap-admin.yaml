@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "expino.fullname" . }}-expino
+  labels:
+    {{- include "expino.labels" . | nindent 4 }}
+    mect.io/component: expino
+data:
+data:
+  variables.js: |-
+    window.expino = {};
+    window.expino.HOST = {{ .Values.configuration.apiURL | quote }};
