@@ -1,4 +1,4 @@
-# Default values for discord-invite-page.
+# Default values for expino
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -17,7 +17,7 @@ expino:
     #    hosts:
     #      - chart-example.local
   image:
-    repository: ghcr.io/mect/discord-invite-page
+    repository: ghcr.io/mect/expino
     pullPolicy: IfNotPresent
     tag: latest
 api:
@@ -40,7 +40,7 @@ api:
     #    hosts:
     #      - chart-example.local
   image:
-    repository: ghcr.io/mect/discord-invite-page
+    repository: ghcr.io/mect/expino-api
     pullPolicy: IfNotPresent
     tag: latest
 admin:
@@ -58,7 +58,7 @@ admin:
     #    hosts:
     #      - chart-example.local
   image:
-    repository: ghcr.io/mect/discord-invite-page
+    repository: ghcr.io/mect/expino-admin
     pullPolicy: IfNotPresent
     tag: latest
 

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "expino.fullname" . }}
+  name: {{ include "expino.fullname" . }}-api
   labels:
     {{- include "expino.labels" . | nindent 4 }}
     mect.io/component: api
