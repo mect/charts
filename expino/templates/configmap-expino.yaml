@@ -13,3 +13,4 @@ data:
     window.expino.THEMECOLOR = {{ .Values.configuration.themeColor | quote }};
     window.expino.HOST = {{ .Values.configuration.apiURL | quote }};
     window.expino.WEATHERCITY = {{ .Values.configuration.watherCity | quote }};
+    window.expino.TOKEN = "local";
