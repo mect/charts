@@ -37,6 +37,7 @@ spec:
           volumeMounts:
             - name: variables
               mountPath: /var/www/variables.js
+              subPath: variables.js
           ports:
             - name: http
               containerPort: 80

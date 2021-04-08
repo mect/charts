@@ -27,7 +27,6 @@ spec:
         - name: variables
           configMap:
             name: {{ include "expino.fullname" . }}-expino
-            subPath: "variables.js"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -37,6 +36,7 @@ spec:
           volumeMounts:
             - name: variables
               mountPath: /var/www/variables.js
+              subPath: variables.js
           ports:
             - name: http
               containerPort: 80
