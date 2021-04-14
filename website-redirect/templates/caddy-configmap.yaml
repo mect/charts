@@ -1,0 +1,21 @@
+{{- if empty .Values.redirects }}
+{{- fail "You have to either set at least one redirect in redirects" }}
+{{- end }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "website-redirect.fullname" . }}-caddyfile
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+data:
+  Caddyfile: |
+    :80 {
+      respond /health 200
+    }
+
+    {{- range $redirect := .Values.redirects }}
+    {{ required "Hostname is missing" $redirect.hostname }}:80 {
+      redir /{{$redirect.path}} {{ required "To is missing" $redirect.to }}{{ if $redirect.preservePath }}{uri}{{ end }} 301
+    }
+    {{- end }}
+

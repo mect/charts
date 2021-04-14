@@ -1,0 +1,39 @@
+{{- if .Values.ingress.enabled -}}
+{{- $serviceName := include "website-redirect.fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
+{{- $path := .Values.ingress.path -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ template "website-redirect.fullname" . }}
+  labels:
+    app: {{ template "website-redirect.name" . }}
+    chart: {{ template "website-redirect.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  rules:
+    {{- range $redirect := .Values.redirects }}
+    - host: {{ required "Hostname is missing" $redirect.hostname }}
+      http:
+        paths:
+          - path: {{ $path }}{{ $redirect.path }}
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+    {{- end }}
+  tls:
+  {{- range $redirect := .Values.redirects }}
+    - secretName: {{ $redirect.hostname | replace "." "-" }}-tls
+      hosts:
+        - {{ $redirect.hostname }}
+  {{- end }}
+{{- end }}
