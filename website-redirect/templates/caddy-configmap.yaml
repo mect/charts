@@ -15,7 +15,7 @@ data:
 
     {{- range $redirect := .Values.redirects }}
     {{ required "Hostname is missing" $redirect.hostname }}:80 {
-      redir /{{$redirect.path}} {{ required "To is missing" $redirect.to }}{{ if $redirect.preservePath }}{uri}{{ end }} 301
+      redir {{ if $redirect.path }}{{ if ne $redirect.path "/" }}/{{$redirect.path}}{{end}}{{end}} {{ required "To is missing" $redirect.to }}{{ if $redirect.preservePath }}{uri}{{ end }} 301
     }
     {{- end }}
 
