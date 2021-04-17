@@ -1,0 +1,21 @@
+{{- if .Values.persistence.enabled }}
+{{- if not .Values.persistence.existingClaim -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "bitwardenrs.fullname" . }}
+  labels:
+    {{- include "bitwardenrs.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
+{{- if ne .Values.persistence.storageClass "-"}}
+  storageClassName: "{{ .Values.persistence.storageClass }}"
+{{- else }}
+  storageClassName: ""
+{{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+{{- end -}}
+{{- end }}
