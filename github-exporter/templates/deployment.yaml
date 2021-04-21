@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "github-exporter.fullname" . }}
+  labels:
+    {{- include "github-exporter.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "github-exporter.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "github-exporter.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "github-exporter.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: GITHUB_EXPORTER_ORG
+              value: {{ .Values.config.githubOrgs }}
+            {{- if .Values.config.githubRepos }}
+            - name: GITHUB_EXPORTER_REPO
+              value: {{ .Values.config.githubRepos }}
+            {{- end }}
+            - name: GITHUB_EXPORTER_COLLECTOR_ACTIONS
+              value: "true"
+            - name: GITHUB_EXPORTER_COLLECTOR_PACKAGES
+              value: "true"
+            - name: GITHUB_EXPORTER_COLLECTOR_STORAGE
+              value: "true"
+            - name: GITHUB_EXPORTER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.tokenSecretName }}
+                  key: {{ .Values.config.tokenSecretKey }}
+          ports:
+            - name: http
+              containerPort: 9504
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
