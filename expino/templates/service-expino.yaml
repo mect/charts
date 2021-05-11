@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "expino.fullname" $root }}-expino
+  name: {{ include "expino.fullname" $root }}-{{ .name }}
   labels:
     {{- include "expino.labels" $root | nindent 4 }}
     mect.io/component: expino

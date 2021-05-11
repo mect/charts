@@ -39,7 +39,7 @@ spec:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}-expino
+              serviceName: {{ $fullName }}-{{ .name }}
               servicePort: {{ $svcPort }}
         {{- end }}
   {{- end }}

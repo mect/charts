@@ -18,6 +18,6 @@ data:
     window.expino.HOST = {{ .configuration.apiURL | quote }};
     window.expino.WEATHERCITY = {{ .configuration.watherCity | quote }};
     window.expino.TOKEN = {{ .configuration.token | quote }};
-    window.expino.STYLE = {{ .configuration.style | quote }};
+    window.expino.STYLE = "{{ .configuration.style }}";
     window.expino.TICKER_SIZE = {{ .configuration.tickerSize | quote }};
 {{- end }}
