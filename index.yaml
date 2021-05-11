@@ -3,9 +3,9 @@ entries:
   bitwardenrs:
   - apiVersion: v2
     appVersion: 1.20.0
-    created: "2021-05-11T10:44:50.319380748Z"
+    created: "2021-05-11T11:12:09.935555911Z"
     description: A Helm chart for Bitwardenrs
-    digest: 78b6797ba04db8bcf8ceca26ba8901219b8aef7f79d5ad8eeb2aa5d4d962d0b7
+    digest: b9b1f7aeaafff42f44852037d43d2ebbfb4bea0de1188fe4c9761af2281066f6
     name: bitwardenrs
     type: application
     urls:
@@ -14,9 +14,9 @@ entries:
   discord-invite-page:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.321508192Z"
+    created: "2021-05-11T11:12:09.936911094Z"
     description: A Helm chart for Kubernetes
-    digest: 5f2c050dcfca02c827a16e9c8b88df4e9c81fdae3e57ada1f6292b79eb283017
+    digest: 0842dd2594b252898db17f3027804807bdecc1b396fae279815dfb58293f7f86
     name: discord-invite-page
     type: application
     urls:
@@ -24,7 +24,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.320995281Z"
+    created: "2021-05-11T11:12:09.936511099Z"
     description: A Helm chart for Kubernetes
     digest: c252e5f7880fd763172a38157d5f60015aa91ce06514b05f598281b7f5eb3ab8
     name: discord-invite-page
@@ -34,7 +34,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.320409569Z"
+    created: "2021-05-11T11:12:09.936066505Z"
     description: A Helm chart for Kubernetes
     digest: 32cc401d6e5c51ced99054843e8f4a003365a5593bcdeacda4a4a8b8f3c08128
     name: discord-invite-page
@@ -45,7 +45,17 @@ entries:
   expino:
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.336887706Z"
+    created: "2021-05-11T11:12:09.943504114Z"
+    description: A Helm chart for Expino
+    digest: 063fd92578332969d04da3fef54c0e0222f6d658669435958f42e5aacb9ee406
+    name: expino
+    type: application
+    urls:
+    - https://charts.mect.io/expino-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2021-05-11T11:12:09.942858122Z"
     description: A Helm chart for Expino
     digest: 97e20e022b77c94bb426de0fa10876533373f54affd841b0a4dbc9cacc1c5625
     name: expino
@@ -55,7 +65,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.33612039Z"
+    created: "2021-05-11T11:12:09.942053632Z"
     description: A Helm chart for Expino
     digest: 5ea850f59637b8154d12f48469342ea5c918477417811206a2edc16ccd8efac8
     name: expino
@@ -65,7 +75,7 @@ entries:
     version: 1.0.0
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.335320174Z"
+    created: "2021-05-11T11:12:09.941458739Z"
     description: A Helm chart for Expino
     digest: 8da4061b5e15deb2a702b295b4bbf5a0c6f96d3bbd505ecc3e4a6be6191f145c
     name: expino
@@ -75,7 +85,7 @@ entries:
     version: 0.1.7
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.334445656Z"
+    created: "2021-05-11T11:12:09.940836647Z"
     description: A Helm chart for Expino
     digest: 6ed18deeee9ee32e57f9c9abfeec07f0cf1eafe081e5f41d0d64c25f9075dd5f
     name: expino
@@ -85,7 +95,7 @@ entries:
     version: 0.1.6
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.33364644Z"
+    created: "2021-05-11T11:12:09.940279853Z"
     description: A Helm chart for Expino
     digest: 295c93ef329296e1da2f4cf2613f42b2f4b9eba7b18280a1a24253754a6ece8a
     name: expino
@@ -95,7 +105,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.325159866Z"
+    created: "2021-05-11T11:12:09.939662561Z"
     description: A Helm chart for Expino
     digest: 003df5f45656eb853395fcaf1d3bdefc8166caea215bea1484f112244a3a8c0e
     name: expino
@@ -105,7 +115,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.324458152Z"
+    created: "2021-05-11T11:12:09.939134467Z"
     description: A Helm chart for Expino
     digest: 72465c0a2dda96116ed2051f9ef5d6190698409f3fed7ec6818fda934d8da98f
     name: expino
@@ -115,7 +125,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.323722737Z"
+    created: "2021-05-11T11:12:09.938579274Z"
     description: A Helm chart for Expino
     digest: c3dfd26db36750b3cbc392a2dbfb313d7162f2111a3f60c39f25b2604943e6b8
     name: expino
@@ -125,7 +135,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.322991522Z"
+    created: "2021-05-11T11:12:09.937988781Z"
     description: A Helm chart for Expino
     digest: b8079438a4d8cd1975c8225844f900cf2401a22d351737def075e4880974c244
     name: expino
@@ -135,7 +145,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.322269407Z"
+    created: "2021-05-11T11:12:09.937454788Z"
     description: A Helm chart for Expino
     digest: 6b9efaa54ffe7c049e47a46fa5a970c4f0a0f942243c7dd63979d5a761fe1566
     name: expino
@@ -146,9 +156,9 @@ entries:
   github-exporter:
   - apiVersion: v2
     appVersion: 1.0.1
-    created: "2021-05-11T10:44:50.337402116Z"
+    created: "2021-05-11T11:12:09.943961608Z"
     description: A Helm chart for Kubernetes
-    digest: 08d3d620fd412fa510e605199bc2e8187237e1140d98f94ac029725a63769717
+    digest: 9407ed15a88eae3b59ced5132ad11d71e2eb063e086d54d48040870fe3a9c722
     name: github-exporter
     type: application
     urls:
@@ -157,9 +167,9 @@ entries:
   pg-backup-s3:
   - apiVersion: v2
     appVersion: fcdfecd14025deeb9469a5b2f5a50ae54d851f34
-    created: "2021-05-11T10:44:50.339160252Z"
+    created: "2021-05-11T11:12:09.947268368Z"
     description: A Helm chart for pg-backup-s3
-    digest: 23ef92723c5a7e3dfdd7d89eeadf7d0f376668cbec9294c3ddc090103ffe1498
+    digest: 04b2e9b1010bbfca40e79c80062042e35990bed38560c3464e499048264a143f
     name: pg-backup-s3
     type: application
     urls:
@@ -167,7 +177,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 059c2f3e0f63c322a03e27bb555d9b0014004151
-    created: "2021-05-11T10:44:50.338794145Z"
+    created: "2021-05-11T11:12:09.946999771Z"
     description: A Helm chart for pg-backup-s3
     digest: 27235f3c5598d6d813d6767be0a5c9457ca94b6cb2676dd6153fbfeb7c534cb5
     name: pg-backup-s3
@@ -177,7 +187,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: b30fe1fa0239407bb3fb01a4b501899682a1f711
-    created: "2021-05-11T10:44:50.338471038Z"
+    created: "2021-05-11T11:12:09.946363979Z"
     description: A Helm chart for pg-backup-s3
     digest: 00b57170f1e7f89252b3c83e1b1c6c6dfb2c2a0bc86717738384156581e4521e
     name: pg-backup-s3
@@ -187,7 +197,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 302cf3a14043f0627feea8df626407471aed6a54
-    created: "2021-05-11T10:44:50.338143932Z"
+    created: "2021-05-11T11:12:09.945942184Z"
     description: A Helm chart for pg-backup-s3
     digest: 12f00d772b498cbeffc11820d24bd574b9e1764e9b1df7315174a71d895a0357
     name: pg-backup-s3
@@ -197,7 +207,7 @@ entries:
     version: 0.1.1
   - apiVersion: v2
     appVersion: 60bb733e01b8bae1bf6a23ab061b775f4cadd8f4
-    created: "2021-05-11T10:44:50.337773124Z"
+    created: "2021-05-11T11:12:09.944311204Z"
     description: A Helm chart for pg-backup-s3
     digest: 04c49acabcaf91f23600791766305f76935236491386561b0feacf0c4d7bf417
     name: pg-backup-s3
@@ -208,9 +218,9 @@ entries:
   website-redirect:
   - apiVersion: v1
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.340167473Z"
+    created: "2021-05-11T11:12:09.948175357Z"
     description: A Helm chart to redirect all requests to another URL
-    digest: bad50920588085aaec8fde36a66f12c42fad311434a14a861edd89a7f4e97a38
+    digest: 972d44573936816eeb9a157823c66490c069b00d6b78ed9f9efb4b44baedac51
     home: https://github.com/mect/charts
     maintainers:
     - email: github@mect.io
@@ -221,7 +231,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: 0.1.0
-    created: "2021-05-11T10:44:50.339676263Z"
+    created: "2021-05-11T11:12:09.947652563Z"
     description: A Helm chart to redirect all requests to another URL
     digest: 645a79dafa4160d2c5205e70d561c5ddb03d39d235212bf6b0a1caecbb613910
     home: https://github.com/mect/charts
@@ -232,4 +242,4 @@ entries:
     urls:
     - https://charts.mect.io/website-redirect-0.1.0.tgz
     version: 0.1.0
-generated: "2021-05-11T10:44:50.318586032Z"
+generated: "2021-05-11T11:12:09.934905419Z"
