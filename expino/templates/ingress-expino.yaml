@@ -32,6 +32,7 @@ spec:
   {{- end }}
 {{- end }}
   rules:
+  {{ $setup := .}}
   {{- range .ingress.hosts }}
     - host: {{ .host | quote }}
       http:
@@ -39,7 +40,7 @@ spec:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              serviceName: {{ $fullName }}-{{ .name }}
+              serviceName: {{ $fullName }}-{{ $setup.name }}
               servicePort: {{ $svcPort }}
         {{- end }}
   {{- end }}
