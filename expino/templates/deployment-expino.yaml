@@ -1,39 +1,45 @@
+{{ $root := .}}
+{{- range .Values.displays }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "expino.fullname" . }}
+  name: {{ include "expino.fullname" $root }}-{{ .name }}
   labels:
-    {{- include "expino.labels" . | nindent 4 }}
+    {{- include "expino.labels" $root | nindent 4 }}
     mect.io/component: expino
+    mect.io/display-name: {{ .name }}
 spec:
-  replicas: {{ .Values.expino.replicaCount }}
+  replicas: {{ .replicaCount }}
   selector:
     matchLabels:
-      {{- include "expino.selectorLabels" . | nindent 6 }}
+      {{- include "expino.selectorLabels" $root | nindent 6 }}
       mect.io/component: expino
+      mect.io/display-name: {{ .name }}
   template:
     metadata:
       labels:
-        {{- include "expino.selectorLabels" . | nindent 8 }}
+        {{- include "expino.selectorLabels" $root | nindent 8 }}
         mect.io/component: expino
+        mect.io/display-name: {{ .name }}
     spec:
-    {{- with .Values.imagePullSecrets }}
+    {{- with $root.Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      serviceAccountName: {{ include "expino.serviceAccountName" . }}
+      serviceAccountName: {{ include "expino.serviceAccountName" $root }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml $root.Values.podSecurityContext | nindent 8 }}
       volumes:
         - name: variables
           configMap:
-            name: {{ include "expino.fullname" . }}-expino
+            name: {{ include "expino.fullname" $root }}-expino-{{ .name }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ $root.Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.expino.image.repository }}:{{ .Values.expino.image.tag }}"
-          imagePullPolicy: {{ .Values.expino.image.pullPolicy }}
+            {{- toYaml $root.Values.securityContext | nindent 12 }}
+          image: "{{ $root.Values.expino.image.repository }}:{{ $root.Values.expino.image.tag }}"
+          imagePullPolicy: {{ $root.Values.expino.image.pullPolicy }}
           volumeMounts:
             - name: variables
               mountPath: /var/www/variables.js
@@ -51,16 +57,17 @@ spec:
               path: /
               port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml $root.Values.resources | nindent 12 }}
+      {{- with $root.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
+    {{- with $root.Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- with .Values.tolerations }}
+    {{- with $root.Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+{{- end }}

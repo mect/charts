@@ -1,17 +1,23 @@
+{{ $root := .}}
+{{- range .Values.displays }}
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "expino.fullname" . }}-expino
+  name: {{ include "expino.fullname" $root }}-expino
   labels:
-    {{- include "expino.labels" . | nindent 4 }}
+    {{- include "expino.labels" $root | nindent 4 }}
     mect.io/component: expino
+    mect.io/display-name: {{ .name }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ $root.Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ $root.Values.service.port }}
       targetPort: http
       protocol: TCP
       name: http
   selector:
-    {{- include "expino.selectorLabels" . | nindent 4 }}
+    {{- include "expino.selectorLabels" $root | nindent 4 }}
     mect.io/component: expino
+    mect.io/display-name: {{ .name }}
+{{- end }}

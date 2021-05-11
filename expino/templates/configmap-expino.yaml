@@ -1,16 +1,23 @@
+{{ $root := .}}
+{{- range .Values.displays }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "expino.fullname" . }}-expino
+  name: {{ include "expino.fullname" $root }}-expino-{{.name}}
   labels:
-    {{- include "expino.labels" . | nindent 4 }}
+    {{- include "expino.labels" $root | nindent 4 }}
     mect.io/component: expino
+    mect.io/display-name: {{ .name }}
 data:
 data:
   variables.js: |-
     window.expino = {};
-    window.expino.LOGO = {{ .Values.configuration.logoURL | quote }};
-    window.expino.THEMECOLOR = {{ .Values.configuration.themeColor | quote }};
-    window.expino.HOST = {{ .Values.configuration.apiURL | quote }};
-    window.expino.WEATHERCITY = {{ .Values.configuration.watherCity | quote }};
-    window.expino.TOKEN = "local";
+    window.expino.LOGO = {{ .configuration.logoURL | quote }};
+    window.expino.THEMECOLOR = {{ .configuration.themeColor | quote }};
+    window.expino.HOST = {{ .configuration.apiURL | quote }};
+    window.expino.WEATHERCITY = {{ .configuration.watherCity | quote }};
+    window.expino.TOKEN = {{ .configuration.token | quote }};
+    window.expino.STYLE = {{ .configuration.style | quote }};
+    window.expino.TICKER_SIZE = {{ .configuration.tickerSize | quote }};
+{{- end }}

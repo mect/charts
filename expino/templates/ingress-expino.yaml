@@ -1,6 +1,9 @@
-{{- if .Values.expino.ingress.enabled -}}
-{{- $fullName := include "expino.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
+{{ $root := .}}
+{{- range .Values.displays }}
+---
+{{- if .ingress.enabled -}}
+{{- $fullName := include "expino.fullname" $root -}}
+{{- $svcPort := $root.Values.service.port -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
@@ -8,18 +11,19 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-{{ .name }}
   labels:
-    {{- include "expino.labels" . | nindent 4 }}
+    {{- include "expino.labels" $root | nindent 4 }}
     mect.io/component: expino
-  {{- with .Values.expino.ingress.annotations }}
+    mect.io/display-name: {{ .name }}
+  {{- with .ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.expino.ingress.tls }}
+{{- if .ingress.tls }}
   tls:
-  {{- range .Values.expino.ingress.tls }}
+  {{- range .ingress.tls }}
     - hosts:
       {{- range .hosts }}
         - {{ . | quote }}
@@ -28,7 +32,7 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.expino.ingress.hosts }}
+  {{- range .ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -39,4 +43,5 @@ spec:
               servicePort: {{ $svcPort }}
         {{- end }}
   {{- end }}
+{{- end }}
 {{- end }}
