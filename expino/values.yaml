@@ -6,7 +6,6 @@ displays:
   - name: display
     replicaCount: 1
     configuration:
-      apiURL: "http://expino-api.expino.svc.cluster.local"
       token: ""
       themeColor: "#368ad8"
       watherCity: "Antwerpen, BE"
@@ -76,6 +75,7 @@ admin:
 
 configuration:
   secretName: ""
+  apiURL: "http://expino-api.expino.svc.cluster.local"
 
 imagePullSecrets: []
 nameOverride: ""

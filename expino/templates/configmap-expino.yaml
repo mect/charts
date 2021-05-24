@@ -15,7 +15,7 @@ data:
     window.expino = {};
     window.expino.LOGO = {{ .configuration.logoURL | quote }};
     window.expino.THEMECOLOR = {{ .configuration.themeColor | quote }};
-    window.expino.HOST = {{ .configuration.apiURL | quote }};
+    window.expino.HOST = {{  $root.Values.configuration.apiURL | quote }};
     window.expino.WEATHERCITY = {{ .configuration.watherCity | quote }};
     window.expino.TOKEN = {{ .configuration.token | quote }};
     window.expino.STYLE = "{{ .configuration.style }}";
