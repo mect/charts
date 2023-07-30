@@ -1,5 +1,6 @@
 {{ $root := .}}
 {{- range .Values.displays }}
+{{ $display := .}}
 ---
 {{- if .ingress.enabled -}}
 {{- $fullName := include "expino.fullname" $root -}}
@@ -38,7 +39,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ $fullName }}-{{ .name }}
+                name: {{ $fullName }}-{{ $display.name }}
                 port:
                   number: {{ $svcPort }}
           {{- end }}
